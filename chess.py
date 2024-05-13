@@ -1,22 +1,12 @@
 import PySimpleGUI as sg
 
+from buttons_notation import buttons_layout
+
 ROWS = COL = 8
 
 
-layout = [
-    [
-        [
-            sg.Button(
-                " ",
-                size=(8, 4),
-                key=(i, j),
-                pad=(0, 0),
-            )
-            for i in range(8)
-        ]
-        for j in range(8)
-    ],
-]
+buttons_image = "empty_board.png"
+layout = [buttons_layout]
 
 
 window = sg.Window("Xadrez", layout)
