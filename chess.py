@@ -11,10 +11,13 @@ layout = [buttons_layout]
 
 window = sg.Window("Xadrez", layout)
 
+
 while True:
     event, values = window.read()
     print(event)
     if event in (None, "Exit"):
         break
+    elif event == "h7":
+        window["h7"].update(button_color=("white"))
 
 window.close()
