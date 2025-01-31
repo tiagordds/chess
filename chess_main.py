@@ -35,6 +35,21 @@ pieces_initial_positions = {
     (72, 2): "♙",
 }
 
+piece_ownership = {
+    "♙": "White",
+    "♖": "White",
+    "♘": "White",
+    "♗": "White",
+    "♕": "White",
+    "♔": "White",
+    "♟": "Black",
+    "♜": "Black",
+    "♞": "Black",
+    "♝": "Black",
+    "♛": "Black",
+    "♚": "Black",
+}
+
 
 def get_piece_type(piece):
     pieces = {
@@ -122,6 +137,7 @@ layout = create_chessboard()
 window = sg.Window("First Chess Game", layout)
 
 selected_square = None
+current_player = "White"
 
 while True:
     event, values = window.read()
@@ -136,15 +152,21 @@ while True:
         source_piece = pieces_initial_positions.get(selected_square)
 
         if source_piece:
-            if is_valid_move(
-                selected_square, event, source_piece, pieces_initial_positions
-            ):
-                window[selected_square].update("")
-                window[event].update(source_piece)
+            if piece_ownership.get(source_piece) == current_player:
+                if is_valid_move(
+                    selected_square, event, source_piece, pieces_initial_positions
+                ):
+                    window[selected_square].update("")
+                    window[event].update(source_piece)
 
-                pieces_initial_positions[event] = source_piece
-                del pieces_initial_positions[selected_square]
-        selected_square = None
+                    pieces_initial_positions[event] = source_piece
+                    del pieces_initial_positions[selected_square]
+
+                    current_player = "Black" if current_player == "White" else "White"
+                    print(f"It's now {current_player}'s turn.")
+            selected_square = None
+        else:
+            print("Invalid move. Try again.")
 
 
 window.close()
