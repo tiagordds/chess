@@ -59,6 +59,11 @@ def is_valid_pawn_move(source, target, piece, piece_positions):
     target_col, target_row = target
     direction = 1 if piece == "♙" else -1
 
+    # basic move foward
+    if source_col == target_col and target_row == source_row + direction:
+        return target not in piece_positions
+
+    # checks if it's the first pawn move
     if (source_row == 2 and piece == "♙") or (source_row == 7 and piece == "♟"):
         if source_col == target_col and target_row == source_row + 2 * direction:
             intermediate_square = (source_col, source_row + direction)
@@ -66,6 +71,8 @@ def is_valid_pawn_move(source, target, piece, piece_positions):
                 target not in piece_positions
                 and intermediate_square not in piece_positions
             )
+
+    # capture move
     if abs(source_col - target_col) == 1 and target_row == source_row + direction:
         return target in piece_positions
     return False
